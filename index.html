@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Srisha ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --peach: #FFD4C4;
+            --coral: #FF9F9F;
+            --cream: #FFF9F5;
+            --rose: #FFB5C5;
+            --deep-rose: #E8A5B5;
+            --soft-shadow: rgba(255, 159, 159, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--peach) 100%);
+            color: #5a4a4a;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 15s infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Page transitions */
+        .page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            z-index: 2;
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Question Page */
+        .question-page {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .question-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--deep-rose);
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-text {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #7a6a6a;
+            margin-bottom: 60px;
+            animation: fadeIn 1.2s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 80px;
+            animation: fadeIn 1.5s ease-out 0.6s backwards;
+        }
+
+        .btn {
+            padding: 20px 50px;
+            font-size: 1.4rem;
+            font-family: 'Jost', sans-serif;
+            font-weight: 500;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 159, 159, 0.3);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--coral), var(--rose));
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 159, 159, 0.5);
+        }
+
+        .btn-no {
+            background: white;
+            color: var(--deep-rose);
+            position: absolute;
+            transition: all 0.2s ease;
+        }
+
+        /* Love Message Page */
+        .love-message-page {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .love-message {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--deep-rose);
+            margin-bottom: 30px;
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .love-subtitle {
+            font-size: 1.5rem;
+            color: #7a6a6a;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out 0.5s backwards;
+        }
+
+        /* Memories Page */
+        .memories-page {
+            padding: 60px 30px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .memories-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .memories-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--deep-rose);
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .memories-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #7a6a6a;
+            margin-bottom: 60px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 159, 159, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255, 159, 159, 0.25);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--peach), var(--rose));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            padding: 25px;
+            font-size: 1.1rem;
+            color: #6a5a5a;
+            line-height: 1.6;
+        }
+
+        .photo-caption h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            color: var(--deep-rose);
+            margin-bottom: 8px;
+        }
+
+        .final-message {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px var(--soft-shadow);
+            margin-top: 40px;
+        }
+
+        .final-message p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .final-message .signature {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            color: var(--coral);
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .question-title {
+                font-size: 2.5rem;
+            }
+
+            .question-text {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 15px 35px;
+                font-size: 1.2rem;
+            }
+
+            .love-message {
+                font-size: 2.5rem;
+            }
+
+            .memories-title {
+                font-size: 2.5rem;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .final-message {
+                padding: 35px;
+            }
+        }
+
+        /* Instructions overlay */
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 30px;
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-size: 0.9rem;
+            color: #7a6a6a;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="heartsContainer"></div>
+
+    <!-- Question Page -->
+    <div class="page question-page active" id="questionPage">
+        <div>
+            <h1 class="question-title">Hey Srisha! 💕</h1>
+            <p class="question-text">Will you be my Valentine?</p>
+            <div class="buttons-container">
+                <button class="btn btn-yes" onclick="selectYes()">YES</button>
+                <button class="btn btn-yes" onclick="selectYes()">OF COURSE</button>
+                <button class="btn btn-no" id="noButton">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Love Message Page -->
+    <div class="page love-message-page" id="loveMessagePage">
+        <div>
+            <h1 class="love-message">I Love You So Much! 💖</h1>
+            <p class="love-subtitle">You make every day brighter just by being you</p>
+            <p class="love-subtitle" style="animation-delay: 0.8s;">Let me show you some of our beautiful memories...</p>
+        </div>
+    </div>
+
+    <!-- Memories Page -->
+    <div class="page memories-page" id="memoriesPage">
+        <div class="memories-container">
+            <h1 class="memories-title">Our Beautiful Journey ✨</h1>
+            <p class="memories-subtitle">Every moment with you is a treasure</p>
+
+            <div class="gallery">
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        📸
+                        <!-- To add your photo: <img src="path-to-your-image.jpg" alt="Memory"> -->
+                    </div>
+                    <div class="photo-caption">
+                        <h3>First Memory</h3>
+                        <p>Add your special memory caption here...</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        📸
+                    </div>
+                    <div class="photo-caption">
+                        <h3>Second Memory</h3>
+                        <p>Add your special memory caption here...</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        📸
+                    </div>
+                    <div class="photo-caption">
+                        <h3>Third Memory</h3>
+                        <p>Add your special memory caption here...</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        📸
+                    </div>
+                    <div class="photo-caption">
+                        <h3>Fourth Memory</h3>
+                        <p>Add your special memory caption here...</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        📸
+                    </div>
+                    <div class="photo-caption">
+                        <h3>Fifth Memory</h3>
+                        <p>Add your special memory caption here...</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <div class="photo-placeholder">
+                        📸
+                    </div>
+                    <div class="photo-caption">
+                        <h3>Sixth Memory</h3>
+                        <p>Add your special memory caption here...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-message">
+                <p>Every moment we've shared has been a gift. You bring so much joy, laughter, and love into my life.</p>
+                <p>I can't wait to create a million more beautiful memories with you.</p>
+                <p class="signature">Forever yours, with all my love 💕</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="instructions" id="instructions">
+        💡 To add your photos: Replace the 📸 with &lt;img src="your-image.jpg" alt="Memory"&gt;
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.getElementById('heartsContainer').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+
+        // Generate hearts periodically
+        setInterval(createHeart, 1000);
+
+        // Create initial batch
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createHeart, i * 100);
+        }
+
+        // No button movement
+        const noButton = document.getElementById('noButton');
+        const buttonsContainer = document.querySelector('.buttons-container');
+
+        noButton.addEventListener('mouseenter', moveButton);
+        noButton.addEventListener('touchstart', moveButton);
+
+        function moveButton(e) {
+            e.preventDefault();
+            
+            const containerRect = buttonsContainer.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+            
+            // Calculate safe movement area (keeping button within container)
+            const maxX = containerRect.width - buttonRect.width - 20;
+            const maxY = 100;
+            
+            // Generate random position
+            const randomX = Math.random() * maxX - maxX / 2;
+            const randomY = (Math.random() * maxY) - maxY / 2;
+            
+            // Apply the movement
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+        }
+
+        // Yes button click
+        function selectYes() {
+            const questionPage = document.getElementById('questionPage');
+            const loveMessagePage = document.getElementById('loveMessagePage');
+            const memoriesPage = document.getElementById('memoriesPage');
+            const instructions = document.getElementById('instructions');
+            
+            // Create heart burst
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const burst = document.createElement('div');
+                    burst.className = 'heart';
+                    burst.innerHTML = '💕';
+                    burst.style.left = '50%';
+                    burst.style.top = '50%';
+                    burst.style.animationDuration = '2s';
+                    burst.style.transform = `translate(${(Math.random() - 0.5) * 300}px, ${(Math.random() - 0.5) * 300}px)`;
+                    document.getElementById('heartsContainer').appendChild(burst);
+
+                    setTimeout(() => burst.remove(), 2000);
+                }, i * 30);
+            }
+            
+            // Transition to love message
+            questionPage.classList.remove('active');
+            loveMessagePage.classList.add('active');
+            
+            // After 3 seconds, transition to memories
+            setTimeout(() => {
+                loveMessagePage.classList.remove('active');
+                memoriesPage.classList.add('active');
+                
+                // Hide instructions after some time
+                setTimeout(() => {
+                    instructions.classList.add('hidden');
+                }, 10000);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
