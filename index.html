@@ -223,13 +223,16 @@
             position: relative;
         }
 
-        .video-container video {
+        .video-container video,
+        .video-container iframe {
             width: 100%;
             height: auto;
+            min-height: 70vh; /* Minimum height for iframe */
             max-height: 80vh; /* Prevents video from being too tall */
             display: block;
             object-fit: contain; /* Maintains 9:16 aspect ratio */
             background: #000; /* Black letterboxing only */
+            border: none; /* Remove iframe border */
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transform: translateZ(0);
@@ -512,8 +515,10 @@
                 border-radius: 15px;
             }
 
-            .video-container video {
+            .video-container video,
+            .video-container iframe {
                 max-height: 70vh;
+                min-height: 60vh;
             }
 
             .video-page {
@@ -572,7 +577,7 @@
     <div class="page video-page" id="videoPage">
         <div class="video-container">
             <video id="loveVideo" controls controlsList="nodownload" playsinline preload="metadata">
-                <source src="Video3.mp4" type="video/mp4">
+                <source src="https://github.com/Satyarr/Proj_SL/releases/download/v1.0/Video3.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <div class="video-loading" id="videoLoading">
@@ -748,6 +753,11 @@
                 }, 100);
             }, 100);
         }
+
+        // Video functionality
+        const loveVideo = document.getElementById('loveVideo');
+        const videoControls = document.getElementById('videoControls');
+        const videoLoading = document.getElementById('videoLoading');
 
         // Video functionality
         const loveVideo = document.getElementById('loveVideo');
