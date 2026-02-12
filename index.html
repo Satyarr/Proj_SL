@@ -568,15 +568,15 @@
         <div>
             <h1 class="love-message">Wohooo! Ma timīlāi dherai maya garchu! 💖</h1>
             <p class="love-subtitle">Maya, you make every day brighter just by being you</p>
-            <p class="love-subtitle" style="animation-delay: 2.0s;">Let me show you how our journey has been so far...</p>
-            <p class="love-subtitle" style="animation-delay: 5.0s;">Ready to relive the beautiful days we've spent together? 💕</p>
+            <p class="love-subtitle" style="animation-delay: 1.5s;">I have something special to show you...</p>
+            <button class="btn btn-yes" onclick="goToVideo()" style="margin-top: 40px; animation: fadeIn 1s ease-out 3s backwards;">🎬 Watch Our Story</button>
         </div>
     </div>
 
     <!-- Video Page -->
     <div class="page video-page" id="videoPage">
         <div class="video-container">
-            <video id="loveVideo" controls controlsList="nodownload" playsinline preload="metadata">
+            <video id="loveVideo" controls controlsList="nodownload" playsinline preload="auto">
                 <source src="https://github.com/Satyarr/Proj_SL/releases/download/v1.0/Video3.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -826,11 +826,10 @@
             }
         }
 
-        // Yes button click - updated to go to video page
+        // Yes button click - updated to show love message
         function selectYes() {
             const questionPage = document.getElementById('questionPage');
             const loveMessagePage = document.getElementById('loveMessagePage');
-            const videoPage = document.getElementById('videoPage');
             
             // Create heart burst
             const heartsContainer = document.getElementById('heartsContainer');
@@ -855,27 +854,22 @@
             if (questionPage) questionPage.classList.remove('active');
             if (loveMessagePage) loveMessagePage.classList.add('active');
             
-            // After 5 seconds, transition to video page
-            setTimeout(() => {
-                if (loveMessagePage) loveMessagePage.classList.remove('active');
-                if (videoPage) videoPage.classList.add('active');
-                
-                // Try to autoplay video
-                if (loveVideo && videoLoading) {
-                    videoLoading.classList.add('show');
-                    
-                    // Wait a bit for page transition, then play
-                    setTimeout(() => {
-                        loveVideo.play().then(() => {
-                            if (videoLoading) videoLoading.classList.remove('show');
-                        }).catch((error) => {
-                            // Autoplay was prevented, user will need to click play
-                            if (videoLoading) videoLoading.classList.remove('show');
-                            console.log('Autoplay prevented:', error);
-                        });
-                    }, 500);
-                }
-            }, 5000);
+            // Start preloading video in background
+            if (loveVideo) {
+                loveVideo.load(); // Start loading video
+            }
+        }
+
+        // Go to video page button
+        function goToVideo() {
+            const loveMessagePage = document.getElementById('loveMessagePage');
+            const videoPage = document.getElementById('videoPage');
+            
+            // Transition to video page
+            if (loveMessagePage) loveMessagePage.classList.remove('active');
+            if (videoPage) videoPage.classList.add('active');
+            
+            // Video is already loaded, user can click play when ready
         }
     </script>
 </body>
