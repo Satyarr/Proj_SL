@@ -519,6 +519,29 @@
                 flex-direction: column !important;
             }
 
+            .memory-card.enlarged {
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                transform: none;
+                scale: none;
+                z-index: 1000;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                max-height: calc(100vh - 20px);
+                overflow-y: auto;
+            }
+
+            .memory-card.enlarged .photo-placeholder {
+                flex: 0 0 250px;
+                height: 200px;
+            }
+
+            .memory-card.enlarged .memory-content {
+                padding: 20px;
+            }
+
             .photo-placeholder {
                 flex: 0 0 auto;
                 width: 100%;
