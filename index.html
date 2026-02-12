@@ -223,13 +223,16 @@
             position: relative;
         }
 
-        .video-container video {
+        .video-container video,
+        .video-container iframe {
             width: 100%;
             height: auto;
+            min-height: 70vh; /* Minimum height for iframe */
             max-height: 80vh; /* Prevents video from being too tall */
             display: block;
             object-fit: contain; /* Maintains 9:16 aspect ratio */
             background: #000; /* Black letterboxing only */
+            border: none; /* Remove iframe border */
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             transform: translateZ(0);
@@ -512,8 +515,10 @@
                 border-radius: 15px;
             }
 
-            .video-container video {
+            .video-container video,
+            .video-container iframe {
                 max-height: 70vh;
+                min-height: 60vh;
             }
 
             .video-page {
@@ -572,7 +577,7 @@
     <div class="page video-page" id="videoPage">
         <div class="video-container">
             <video id="loveVideo" controls controlsList="nodownload" playsinline preload="metadata">
-                <source src="Video3.mp4" type="video/mp4">
+                <source src="https://github.com/Satyarr/Proj_SL/releases/download/v1.0/Video3.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <div class="video-loading" id="videoLoading">
@@ -678,6 +683,9 @@
     <script>
         // Create floating hearts
         function createHeart() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            if (!heartsContainer) return;
+            
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💕';
@@ -685,7 +693,7 @@
             heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
             heart.style.animationDelay = Math.random() * 5 + 's';
             heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            document.getElementById('heartsContainer').appendChild(heart);
+            heartsContainer.appendChild(heart);
 
             setTimeout(() => {
                 heart.remove();
@@ -704,12 +712,15 @@
         const noButton = document.getElementById('noButton');
         const buttonsContainer = document.querySelector('.buttons-container');
 
-        noButton.addEventListener('mouseenter', runAway);
-        noButton.addEventListener('touchstart', runAway);
-        noButton.addEventListener('click', moveTowardYes);
+        if (noButton) {
+            noButton.addEventListener('mouseenter', runAway);
+            noButton.addEventListener('touchstart', runAway);
+            noButton.addEventListener('click', moveTowardYes);
+        }
 
         function runAway(e) {
             e.preventDefault();
+            if (!noButton) return;
             
             // Make it run away with larger movements
             const maxX = 300;
@@ -728,6 +739,7 @@
         function moveTowardYes(e) {
             e.preventDefault();
             e.stopPropagation();
+            if (!noButton) return;
             
             // Move toward the Yes buttons (center and slightly left)
             const moveX = (Math.random() * 100) - 50;
@@ -754,50 +766,47 @@
         const videoControls = document.getElementById('videoControls');
         const videoLoading = document.getElementById('videoLoading');
 
-        // Ensure highest quality playback
-        loveVideo.addEventListener('loadedmetadata', function() {
-            // Set playback quality to highest
-            if (loveVideo.videoWidth) {
-                loveVideo.style.width = '100%';
-                loveVideo.style.height = 'auto';
-            }
-        });
+        // Video event listeners
+        if (loveVideo) {
+            // Hide loading when video can play
+            loveVideo.addEventListener('canplaythrough', function() {
+                if (videoLoading) {
+                    videoLoading.classList.remove('show');
+                }
+            });
 
-        // Hide loading when video is ready to play
-        loveVideo.addEventListener('canplaythrough', function() {
-            if (videoLoading) {
-                videoLoading.classList.remove('show');
-            }
-        });
+            // Show loading when buffering
+            loveVideo.addEventListener('waiting', function() {
+                if (videoLoading) {
+                    videoLoading.classList.add('show');
+                }
+            });
 
-        // Show loading when buffering
-        loveVideo.addEventListener('waiting', function() {
-            if (videoLoading) {
-                videoLoading.classList.add('show');
-            }
-        });
+            // Hide loading when playing
+            loveVideo.addEventListener('playing', function() {
+                if (videoLoading) {
+                    videoLoading.classList.remove('show');
+                }
+            });
 
-        // Hide loading when playing
-        loveVideo.addEventListener('playing', function() {
-            if (videoLoading) {
-                videoLoading.classList.remove('show');
-            }
-        });
-
-        // Show controls when video ends
-        loveVideo.addEventListener('ended', function() {
-            videoControls.classList.add('show');
-        });
+            // Show controls when video ends
+            loveVideo.addEventListener('ended', function() {
+                if (videoControls) {
+                    videoControls.classList.add('show');
+                }
+            });
+        }
 
         // Replay video function
         function replayVideo() {
-            loveVideo.pause();
-            loveVideo.currentTime = 0;
-            loveVideo.load(); // Reload to ensure clean start
-            setTimeout(() => {
+            if (loveVideo) {
+                loveVideo.pause();
+                loveVideo.currentTime = 0;
                 loveVideo.play();
-                videoControls.classList.remove('show');
-            }, 100);
+                if (videoControls) {
+                    videoControls.classList.remove('show');
+                }
+            }
         }
 
         // Continue to memories
@@ -806,13 +815,15 @@
             const memoriesPage = document.getElementById('memoriesPage');
             const instructions = document.getElementById('instructions');
             
-            videoPage.classList.remove('active');
-            memoriesPage.classList.add('active');
+            if (videoPage) videoPage.classList.remove('active');
+            if (memoriesPage) memoriesPage.classList.add('active');
             
             // Hide instructions after some time
-            setTimeout(() => {
-                instructions.classList.add('hidden');
-            }, 10000);
+            if (instructions) {
+                setTimeout(() => {
+                    instructions.classList.add('hidden');
+                }, 10000);
+            }
         }
 
         // Yes button click - updated to go to video page
@@ -822,58 +833,48 @@
             const videoPage = document.getElementById('videoPage');
             
             // Create heart burst
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const burst = document.createElement('div');
-                    burst.className = 'heart';
-                    burst.innerHTML = '💕';
-                    burst.style.left = '50%';
-                    burst.style.top = '50%';
-                    burst.style.animationDuration = '2s';
-                    burst.style.transform = `translate(${(Math.random() - 0.5) * 300}px, ${(Math.random() - 0.5) * 300}px)`;
-                    document.getElementById('heartsContainer').appendChild(burst);
+            const heartsContainer = document.getElementById('heartsContainer');
+            if (heartsContainer) {
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        const burst = document.createElement('div');
+                        burst.className = 'heart';
+                        burst.innerHTML = '💕';
+                        burst.style.left = '50%';
+                        burst.style.top = '50%';
+                        burst.style.animationDuration = '2s';
+                        burst.style.transform = `translate(${(Math.random() - 0.5) * 300}px, ${(Math.random() - 0.5) * 300}px)`;
+                        heartsContainer.appendChild(burst);
 
-                    setTimeout(() => burst.remove(), 2000);
-                }, i * 30);
+                        setTimeout(() => burst.remove(), 2000);
+                    }, i * 30);
+                }
             }
             
             // Transition to love message
-            questionPage.classList.remove('active');
-            loveMessagePage.classList.add('active');
+            if (questionPage) questionPage.classList.remove('active');
+            if (loveMessagePage) loveMessagePage.classList.add('active');
             
             // After 5 seconds, transition to video page
             setTimeout(() => {
-                loveMessagePage.classList.remove('active');
-                videoPage.classList.add('active');
+                if (loveMessagePage) loveMessagePage.classList.remove('active');
+                if (videoPage) videoPage.classList.add('active');
                 
-                // Show loading indicator
-                videoLoading.classList.add('show');
-                
-                // Load the video fully before playing
-                loveVideo.load();
-                
-                // Wait for video to be ready, then play from the beginning
-                const playWhenReady = () => {
-                    if (loveVideo.readyState >= 3) { // HAVE_FUTURE_DATA or better
-                        loveVideo.currentTime = 0; // Ensure we start from the very beginning
-                        videoLoading.classList.remove('show');
-                        
-                        // Try to play with sound
-                        const playPromise = loveVideo.play();
-                        if (playPromise !== undefined) {
-                            playPromise.catch(error => {
-                                console.log('Autoplay prevented, user needs to click play');
-                                videoLoading.classList.remove('show');
-                            });
-                        }
-                    } else {
-                        // Video not ready yet, wait a bit more
-                        setTimeout(playWhenReady, 100);
-                    }
-                };
-                
-                // Start checking if video is ready
-                setTimeout(playWhenReady, 500);
+                // Try to autoplay video
+                if (loveVideo && videoLoading) {
+                    videoLoading.classList.add('show');
+                    
+                    // Wait a bit for page transition, then play
+                    setTimeout(() => {
+                        loveVideo.play().then(() => {
+                            if (videoLoading) videoLoading.classList.remove('show');
+                        }).catch((error) => {
+                            // Autoplay was prevented, user will need to click play
+                            if (videoLoading) videoLoading.classList.remove('show');
+                            console.log('Autoplay prevented:', error);
+                        });
+                    }, 500);
+                }
             }, 5000);
         }
     </script>
