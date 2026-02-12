@@ -203,85 +203,197 @@
             animation: fadeIn 1s ease-out 0.5s backwards;
         }
 
+        /* Video Page */
+        .video-page {
+            text-align: center;
+            padding: 20px;
+            flex-direction: column;
+            background: var(--cream); /* Using original soft background */
+        }
+
+        .video-container {
+            max-width: 600px; /* Better for portrait videos */
+            width: 100%;
+            margin: 0 auto;
+            background: #000; /* Black background for video */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: scaleIn 0.8s ease-out;
+            position: relative;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            max-height: 80vh; /* Prevents video from being too tall */
+            display: block;
+            object-fit: contain; /* Maintains 9:16 aspect ratio */
+            background: #000; /* Black letterboxing only */
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+
+        .video-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            display: none;
+        }
+
+        .video-loading.show {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .video-loading p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .video-controls {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 1s forwards;
+        }
+
+        .video-controls.show {
+            opacity: 1;
+        }
+
+        .video-btn {
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            font-family: 'Jost', sans-serif;
+            font-weight: 500;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 159, 159, 0.3);
+        }
+
+        .btn-continue {
+            background: linear-gradient(135deg, var(--coral), var(--rose));
+            color: white;
+        }
+
+        .btn-continue:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 159, 159, 0.5);
+        }
+
+        .btn-replay {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-replay:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(240, 147, 251, 0.5);
+        }
+
         /* Memories Page */
         .memories-page {
-            padding: 60px 30px;
+            padding: 40px 30px;
             overflow-y: auto;
             height: 100vh;
+            align-items: flex-start;
         }
 
         .memories-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
+            width: 100%;
+        }
+
+        .memories-header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
         .memories-title {
             font-family: 'Crimson Pro', serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 300;
             color: var(--deep-rose);
-            text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             letter-spacing: -1px;
         }
 
         .memories-subtitle {
-            text-align: center;
             font-size: 1.3rem;
             color: #7a6a6a;
-            margin-bottom: 60px;
+        }
+
+        .cute-divider {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            opacity: 0.6;
         }
 
         .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
             margin-bottom: 60px;
         }
 
-        .photo-card {
+        .memory-card {
+            display: flex;
+            align-items: center;
             background: white;
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(255, 159, 159, 0.15);
             transition: all 0.4s ease;
         }
 
-        .photo-card:hover {
-            transform: translateY(-10px);
+        .memory-card:hover {
+            transform: translateX(10px);
             box-shadow: 0 20px 50px rgba(255, 159, 159, 0.25);
         }
 
+        .memory-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .memory-card:nth-child(even):hover {
+            transform: translateX(-10px);
+        }
+
         .photo-placeholder {
-            width: 100%;
-            aspect-ratio: 4/3;
+            flex: 0 0 300px;
+            height: 250px;
             background: linear-gradient(135deg, var(--peach), var(--rose));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .photo-placeholder::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-            animation: rotate 15s linear infinite;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+            font-size: 3rem;
         }
 
         .photo-placeholder img {
@@ -290,32 +402,46 @@
             object-fit: cover;
         }
 
-        .photo-caption {
-            padding: 25px;
-            font-size: 1.1rem;
-            color: #6a5a5a;
-            line-height: 1.6;
+        .memory-content {
+            flex: 1;
+            padding: 35px 40px;
         }
 
-        .photo-caption h3 {
+        .memory-content h3 {
             font-family: 'Crimson Pro', serif;
-            font-size: 1.4rem;
+            font-size: 1.8rem;
             color: var(--deep-rose);
-            margin-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .memory-verse {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--coral);
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid var(--rose);
+            font-style: italic;
+        }
+
+        .memory-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #7a6a6a;
         }
 
         .final-message {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
+            background: white;
             padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 159, 159, 0.15);
             text-align: center;
-            box-shadow: 0 20px 60px var(--soft-shadow);
-            margin-top: 40px;
+            margin-bottom: 40px;
         }
 
         .final-message p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            color: #7a6a6a;
             line-height: 1.8;
             margin-bottom: 20px;
         }
@@ -349,12 +475,49 @@
                 font-size: 2.5rem;
             }
 
-            .gallery {
-                grid-template-columns: 1fr;
+            .memory-card {
+                flex-direction: column !important;
+            }
+
+            .memory-card:nth-child(even) {
+                flex-direction: column !important;
+            }
+
+            .photo-placeholder {
+                flex: 0 0 auto;
+                width: 100%;
+                height: 200px;
+            }
+
+            .memory-content {
+                padding: 25px;
             }
 
             .final-message {
                 padding: 35px;
+            }
+
+            .video-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .video-btn {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .video-container {
+                max-width: 90%;
+                border-radius: 15px;
+            }
+
+            .video-container video {
+                max-height: 70vh;
+            }
+
+            .video-page {
+                padding: 10px;
             }
         }
 
@@ -389,7 +552,7 @@
             <p class="question-text">Will you be my Valentine?</p>
             <div class="buttons-container">
                 <button class="btn btn-yes" onclick="selectYes()">YES</button>
-                <button class="btn btn-yes" onclick="selectYes()">OF COURSE</button>
+                <button class="btn btn-yes" onclick="selectYes()">YES...always! 💕</button>
                 <button class="btn btn-no" id="noButton">No</button>
             </div>
         </div>
@@ -398,77 +561,106 @@
     <!-- Love Message Page -->
     <div class="page love-message-page" id="loveMessagePage">
         <div>
-            <h1 class="love-message">I Love You So Much! 💖</h1>
-            <p class="love-subtitle">You make every day brighter just by being you</p>
-            <p class="love-subtitle" style="animation-delay: 0.8s;">Let me show you some of our beautiful memories...</p>
+            <h1 class="love-message">Wohooo! Ma timīlāi dherai maya garchu! 💖</h1>
+            <p class="love-subtitle">Maya, you make every day brighter just by being you</p>
+            <p class="love-subtitle" style="animation-delay: 1.2s;">Let me show you how our journey has been so far...</p>
+            <p class="love-subtitle" style="animation-delay: 5.0s;">Ready to relive the beautiful days we've spent together? 💕</p>
+        </div>
+    </div>
+
+    <!-- Video Page -->
+    <div class="page video-page" id="videoPage">
+        <div class="video-container">
+            <video id="loveVideo" controls controlsList="nodownload" playsinline preload="metadata">
+                <source src="Video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-loading" id="videoLoading">
+                <div class="loading-spinner"></div>
+                <p>Loading video...</p>
+            </div>
+        </div>
+        <div class="video-controls" id="videoControls">
+            <button class="video-btn btn-replay" onclick="replayVideo()">🔄 Replay</button>
+            <button class="video-btn btn-continue" onclick="continueToMemories()">💕 Dive In</button>
         </div>
     </div>
 
     <!-- Memories Page -->
     <div class="page memories-page" id="memoriesPage">
         <div class="memories-container">
-            <h1 class="memories-title">Our Beautiful Journey ✨</h1>
-            <p class="memories-subtitle">Every moment with you is a treasure</p>
+            <div class="memories-header">
+                <h1 class="memories-title">Our Crazy Journey Together ✨</h1>
+                <div class="cute-divider">❤️ · 💕 · 💖 · 💕 · ❤️</div>
+                <p class="memories-subtitle">From the day we met...</p>
+                <p class="memories-subtitle" style="font-size: 1rem; margin-top: 10px;">Every moment with you is a treasure I hold close to my heart</p>
+            </div>
 
             <div class="gallery">
-                <div class="photo-card">
+                <div class="memory-card">
                     <div class="photo-placeholder">
                         📸
                         <!-- To add your photo: <img src="path-to-your-image.jpg" alt="Memory"> -->
                     </div>
-                    <div class="photo-caption">
-                        <h3>First Memory</h3>
-                        <p>Add your special memory caption here...</p>
+                    <div class="memory-content">
+                        <h3>The Day We Met 💫</h3>
+                        <p class="memory-verse"><em>From the very first moment, time stopped. I held my breath as I knew—I'd finally found where my heart belonged.</em></p>
+                        <p class="memory-description">Describe the moment you first met... where you were, what you felt, how you knew this person was special from the very start.</p>
                     </div>
                 </div>
 
-                <div class="photo-card">
+                <div class="memory-card">
                     <div class="photo-placeholder">
                         📸
                     </div>
-                    <div class="photo-caption">
-                        <h3>Second Memory</h3>
-                        <p>Add your special memory caption here...</p>
+                    <div class="memory-content">
+                        <h3>Heart Beats Fast 💓</h3>
+                        <p class="memory-verse"><em>My heart raced with every promise of what we could be. How do I find courage when falling feels so terrifying?</em></p>
+                        <p class="memory-description">Tell the story of those early moments of falling... the excitement, the fear, the beautiful uncertainty of opening your heart.</p>
                     </div>
                 </div>
 
-                <div class="photo-card">
+                <div class="memory-card">
                     <div class="photo-placeholder">
                         📸
                     </div>
-                    <div class="photo-caption">
-                        <h3>Third Memory</h3>
-                        <p>Add your special memory caption here...</p>
+                    <div class="memory-content">
+                        <h3>One Step Closer 🌟</h3>
+                        <p class="memory-verse"><em>Watching you, all my doubts melted away. Each moment brought me closer to certainty—this is real.</em></p>
+                        <p class="memory-description">Share a memory where your fears disappeared and you knew this was something worth believing in... a turning point in your relationship.</p>
                     </div>
                 </div>
 
-                <div class="photo-card">
+                <div class="memory-card">
                     <div class="photo-placeholder">
                         📸
                     </div>
-                    <div class="photo-caption">
-                        <h3>Fourth Memory</h3>
-                        <p>Add your special memory caption here...</p>
+                    <div class="memory-content">
+                        <h3>Waiting For You ⏳</h3>
+                        <p class="memory-verse"><em>Every day before you felt incomplete. Don't be afraid—my love for you is timeless, eternal, unending.</em></p>
+                        <p class="memory-description">Describe a moment that showed you this love was meant to be... when you realized you'd been waiting your whole life for this person.</p>
                     </div>
                 </div>
 
-                <div class="photo-card">
+                <div class="memory-card">
                     <div class="photo-placeholder">
                         📸
                     </div>
-                    <div class="photo-caption">
-                        <h3>Fifth Memory</h3>
-                        <p>Add your special memory caption here...</p>
+                    <div class="memory-content">
+                        <h3>Time Stands Still ✨</h3>
+                        <p class="memory-verse"><em>In your presence, everything becomes beautiful. I chose bravery—nothing will take away what we have now.</em></p>
+                        <p class="memory-description">Remember a perfect moment together... when time seemed to stop and you were completely present with each other.</p>
                     </div>
                 </div>
 
-                <div class="photo-card">
+                <div class="memory-card">
                     <div class="photo-placeholder">
                         📸
                     </div>
-                    <div class="photo-caption">
-                        <h3>Sixth Memory</h3>
-                        <p>Add your special memory caption here...</p>
+                    <div class="memory-content">
+                        <h3>Every Breath, Every Hour 💖</h3>
+                        <p class="memory-verse"><em>All along I believed fate would bring us together. Every breath led to this—my heart finding its way to yours, forever.</em></p>
+                        <p class="memory-description">Share your most cherished recent memory or a moment that represents your love today... and the endless tomorrows ahead.</p>
                     </div>
                 </div>
             </div>
@@ -481,9 +673,7 @@
         </div>
     </div>
 
-    <div class="instructions" id="instructions">
-        💡 To add your photos: Replace the 📸 with &lt;img src="your-image.jpg" alt="Memory"&gt;
-    </div>
+
 
     <script>
         // Create floating hearts
@@ -510,38 +700,126 @@
             setTimeout(createHeart, i * 100);
         }
 
-        // No button movement
+        // No button movement - runs away on hover, moves toward Yes when clicked
         const noButton = document.getElementById('noButton');
         const buttonsContainer = document.querySelector('.buttons-container');
 
-        noButton.addEventListener('mouseenter', moveButton);
-        noButton.addEventListener('touchstart', moveButton);
+        noButton.addEventListener('mouseenter', runAway);
+        noButton.addEventListener('touchstart', runAway);
+        noButton.addEventListener('click', moveTowardYes);
 
-        function moveButton(e) {
+        function runAway(e) {
             e.preventDefault();
             
-            const containerRect = buttonsContainer.getBoundingClientRect();
-            const buttonRect = noButton.getBoundingClientRect();
+            // Make it run away with larger movements
+            const maxX = 300;
+            const maxY = 200;
             
-            // Calculate safe movement area (keeping button within container)
-            const maxX = containerRect.width - buttonRect.width - 20;
-            const maxY = 100;
-            
-            // Generate random position
-            const randomX = Math.random() * maxX - maxX / 2;
+            // Generate random position that moves away from current position
+            const randomX = (Math.random() * maxX) - maxX / 2;
             const randomY = (Math.random() * maxY) - maxY / 2;
             
-            // Apply the movement
+            // Apply the movement with smooth transition
+            noButton.style.transition = 'all 0.3s ease';
             noButton.style.left = randomX + 'px';
             noButton.style.top = randomY + 'px';
         }
 
-        // Yes button click
+        function moveTowardYes(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Move toward the Yes buttons (center and slightly left)
+            const moveX = (Math.random() * 100) - 50;
+            const moveY = (Math.random() * 40) - 20;
+            
+            noButton.style.transition = 'all 0.4s ease';
+            noButton.style.left = moveX + 'px';
+            noButton.style.top = moveY + 'px';
+            
+            // Make it wiggle
+            setTimeout(() => {
+                noButton.style.transform = 'rotate(10deg)';
+                setTimeout(() => {
+                    noButton.style.transform = 'rotate(-10deg)';
+                    setTimeout(() => {
+                        noButton.style.transform = 'rotate(0deg)';
+                    }, 100);
+                }, 100);
+            }, 100);
+        }
+
+        // Video functionality
+        const loveVideo = document.getElementById('loveVideo');
+        const videoControls = document.getElementById('videoControls');
+        const videoLoading = document.getElementById('videoLoading');
+
+        // Ensure highest quality playback
+        loveVideo.addEventListener('loadedmetadata', function() {
+            // Set playback quality to highest
+            if (loveVideo.videoWidth) {
+                loveVideo.style.width = '100%';
+                loveVideo.style.height = 'auto';
+            }
+        });
+
+        // Hide loading when video is ready to play
+        loveVideo.addEventListener('canplaythrough', function() {
+            if (videoLoading) {
+                videoLoading.classList.remove('show');
+            }
+        });
+
+        // Show loading when buffering
+        loveVideo.addEventListener('waiting', function() {
+            if (videoLoading) {
+                videoLoading.classList.add('show');
+            }
+        });
+
+        // Hide loading when playing
+        loveVideo.addEventListener('playing', function() {
+            if (videoLoading) {
+                videoLoading.classList.remove('show');
+            }
+        });
+
+        // Show controls when video ends
+        loveVideo.addEventListener('ended', function() {
+            videoControls.classList.add('show');
+        });
+
+        // Replay video function
+        function replayVideo() {
+            loveVideo.pause();
+            loveVideo.currentTime = 0;
+            loveVideo.load(); // Reload to ensure clean start
+            setTimeout(() => {
+                loveVideo.play();
+                videoControls.classList.remove('show');
+            }, 100);
+        }
+
+        // Continue to memories
+        function continueToMemories() {
+            const videoPage = document.getElementById('videoPage');
+            const memoriesPage = document.getElementById('memoriesPage');
+            const instructions = document.getElementById('instructions');
+            
+            videoPage.classList.remove('active');
+            memoriesPage.classList.add('active');
+            
+            // Hide instructions after some time
+            setTimeout(() => {
+                instructions.classList.add('hidden');
+            }, 10000);
+        }
+
+        // Yes button click - updated to go to video page
         function selectYes() {
             const questionPage = document.getElementById('questionPage');
             const loveMessagePage = document.getElementById('loveMessagePage');
-            const memoriesPage = document.getElementById('memoriesPage');
-            const instructions = document.getElementById('instructions');
+            const videoPage = document.getElementById('videoPage');
             
             // Create heart burst
             for (let i = 0; i < 20; i++) {
@@ -563,16 +841,40 @@
             questionPage.classList.remove('active');
             loveMessagePage.classList.add('active');
             
-            // After 3 seconds, transition to memories
+            // After 5 seconds, transition to video page
             setTimeout(() => {
                 loveMessagePage.classList.remove('active');
-                memoriesPage.classList.add('active');
+                videoPage.classList.add('active');
                 
-                // Hide instructions after some time
-                setTimeout(() => {
-                    instructions.classList.add('hidden');
-                }, 10000);
-            }, 3000);
+                // Show loading indicator
+                videoLoading.classList.add('show');
+                
+                // Load the video fully before playing
+                loveVideo.load();
+                
+                // Wait for video to be ready, then play from the beginning
+                const playWhenReady = () => {
+                    if (loveVideo.readyState >= 3) { // HAVE_FUTURE_DATA or better
+                        loveVideo.currentTime = 0; // Ensure we start from the very beginning
+                        videoLoading.classList.remove('show');
+                        
+                        // Try to play with sound
+                        const playPromise = loveVideo.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log('Autoplay prevented, user needs to click play');
+                                videoLoading.classList.remove('show');
+                            });
+                        }
+                    } else {
+                        // Video not ready yet, wait a bit more
+                        setTimeout(playWhenReady, 100);
+                    }
+                };
+                
+                // Start checking if video is ready
+                setTimeout(playWhenReady, 500);
+            }, 5000);
         }
     </script>
 </body>
