@@ -85,6 +85,29 @@
             pointer-events: all;
         }
 
+        /* GIF Page - Penguin giving rose */
+        .gif-page {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .gif-page img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        .gif-page .loading-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            color: var(--deep-rose);
+            margin-top: 30px;
+            animation: fadeIn 1s ease-out 0.5s backwards;
+        }
+
         /* Question Page */
         .question-page {
             text-align: center;
@@ -619,6 +642,14 @@
         </div>
     </div>
 
+    <!-- GIF Page - Penguin giving rose -->
+    <div class="page gif-page" id="gifPage">
+        <div>
+            <img src="https://github.com/Satyarr/Proj_SL/releases/download/v1.0/gif2.gif" alt="Penguin giving rose">
+            <p class="loading-text">This is for you! Get ready for something special... 💕</p>
+        </div>
+    </div>
+
     <!-- Love Message Page -->
     <div class="page love-message-page" id="loveMessagePage">
         <div>
@@ -892,10 +923,10 @@
             if (videoPage) videoPage.classList.add('active');
         }
 
-        // Yes button click - updated to show love message
+        // Yes button click - updated to show GIF page first
         function selectYes() {
             const questionPage = document.getElementById('questionPage');
-            const loveMessagePage = document.getElementById('loveMessagePage');
+            const gifPage = document.getElementById('gifPage');
             
             // Create heart burst
             const heartsContainer = document.getElementById('heartsContainer');
@@ -916,8 +947,22 @@
                 }
             }
             
-            // Transition to love message
+            // Transition to GIF page first
             if (questionPage) questionPage.classList.remove('active');
+            if (gifPage) gifPage.classList.add('active');
+            
+            // Auto-transition to love message page after 3.5 seconds
+            setTimeout(() => {
+                goToLoveMessage();
+            }, 3500);
+        }
+
+        // Go to love message page from GIF page
+        function goToLoveMessage() {
+            const gifPage = document.getElementById('gifPage');
+            const loveMessagePage = document.getElementById('loveMessagePage');
+            
+            if (gifPage) gifPage.classList.remove('active');
             if (loveMessagePage) loveMessagePage.classList.add('active');
             
             // Start preloading video in background
