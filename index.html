@@ -642,13 +642,14 @@
         </div>
     </div>
 
-    <!-- GIF Page - Penguin giving rose -->
+    <!-- GIF Page - Penguin giving rose (Commented out)
     <div class="page gif-page" id="gifPage">
         <div>
             <img src="https://github.com/Satyarr/Proj_SL/releases/download/v1.0/gif2.gif" alt="Penguin giving rose">
             <p class="loading-text">This is for you! Get ready for something special... 💕</p>
         </div>
     </div>
+    -->
 
     <!-- Love Message Page -->
     <div class="page love-message-page" id="loveMessagePage">
@@ -952,10 +953,10 @@
             if (videoPage) videoPage.classList.add('active');
         }
 
-        // Yes button click - updated to show GIF page first
+        // Yes button click - goes directly to love message page
         function selectYes() {
             const questionPage = document.getElementById('questionPage');
-            const gifPage = document.getElementById('gifPage');
+            const loveMessagePage = document.getElementById('loveMessagePage');
             
             // Create heart burst
             const heartsContainer = document.getElementById('heartsContainer');
@@ -976,22 +977,8 @@
                 }
             }
             
-            // Transition to GIF page first
+            // Transition directly to love message page
             if (questionPage) questionPage.classList.remove('active');
-            if (gifPage) gifPage.classList.add('active');
-            
-            // Auto-transition to love message page after 1.5 seconds
-            setTimeout(() => {
-                goToLoveMessage();
-            }, 1500);
-        }
-
-        // Go to love message page from GIF page
-        function goToLoveMessage() {
-            const gifPage = document.getElementById('gifPage');
-            const loveMessagePage = document.getElementById('loveMessagePage');
-            
-            if (gifPage) gifPage.classList.remove('active');
             if (loveMessagePage) loveMessagePage.classList.add('active');
             
             // Start preloading video in background
